@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import Users from './components/Users';
+import Groups from './components/Groups';
 
-function App() {
-  const [count, setCount] = useState(0)
+const Home = () => (
+  <div>
+    <h2>Welcome to the Social Media Database</h2>
+    <p>Select a category to view more details.</p>
+  </div>
+);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+const App = () => (
+  <div>
+    <h1>Social Media Database</h1>
+    <Router>
+      <nav>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/users">Users</Link></li>
+          <li><Link to="/groups">Groups</Link></li>
+        </ul>
+      </nav>
 
-export default App
+      <Routes>
+        <Route path="/users" element={<Users />} />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Navigate replace to="/" />} />
+      </Routes>
+    </Router>
+  </div>
+);
+
+export default App;
