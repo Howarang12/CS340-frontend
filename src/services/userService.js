@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3001/users';
+const baseUrl = 'http://flip2.engr.oregonstate.edu:34556/users';
 
 export const getAllUsers = async () => {
   try {
