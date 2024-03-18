@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://flip2.engr.oregonstate.edu:34556/userGroups';
+const baseUrl = 'http://flip2.engr.oregonstate.edu:34556/user-groups';
 
 export const getAllUserGroups = async () => {
   try {
