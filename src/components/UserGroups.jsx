@@ -68,14 +68,22 @@ const UserGroups = () => {
         </table>
       </div>
       <form onSubmit={handleFormSubmit} className="add-user-group-form">
-        <input
+        <select name="userID" placeholder="User ID" value={userGroupForm.userID} onChange={handleInputChange}>
+          <option value="">Select User...</option>
+          {users.map((user) => (
+          <option key={user.userID} value={user.userID}>
+            {user.username}
+          </option>
+          ))}
+        </select>
+        {/* <input
           type="text"
           name="userID"
           placeholder="User ID"
           value={userGroupForm.userID}
           onChange={handleInputChange}
           required
-        />
+        /> */}
         <input
           type="text"
           name="groupID"
