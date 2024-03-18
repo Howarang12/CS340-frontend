@@ -1,19 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import * as likeService from '../services/likeService'; 
+import * as userService from '../services/userService';
+import * as groupService from '../services/groupService'
 import '../App.css';
 
 const Likes = () => {
   const [likes, setLikes] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [groups, setGroups] = useState([]);
   // Initialize the form with default values
   const [likeForm, setLikeForm] = useState({ userID: '', postID: '', likeStatus: 1 });
 
   useEffect(() => {
     fetchLikes();
+    fetchUsers();
+    fetchGroups()
   }, []);
 
   async function fetchLikes() {
     const fetchedLikes = await likeService.getLikes();
     setLikes(fetchedLikes);
+  }
+
+  async function fetchUsers() {
+    const fetchedUsers = await userservice.getAllUsers();
+    setUsers(fetchedUsers);
+  }
+
+  async function fetchGroups() {
+    const fetchedGroups = await groupservice.getAllGroups();
+    setGroups(fetchedGroups);
   }
 
   function handleInputChange(event) {
@@ -63,8 +79,18 @@ const Likes = () => {
         </table>
       </div>
       <form onSubmit={handleFormSubmit}>
-        <input type="text" name="userID" placeholder="User ID" value={likeForm.userID} onChange={handleInputChange} required />
+        {/* <input type="text" name="userID" placeholder="User ID" value={likeForm.userID} onChange={handleInputChange} required /> */}
+        <select name="userID" placeholder="User ID" value={likeForm.userID} onChange={handleInputChange}>
+          <option value="">Select User...</option>
+          {users.map((user) => (
+          <option key={user.userID} value={user.userID}>
+            {user.username}
+          </option>
+          ))}
+        </select>
+
         <input type="text" name="postID" placeholder="Post ID" value={likeForm.postID} onChange={handleInputChange} required />
+
         <button type="submit">Add Like</button>
       </form>
     </div>
