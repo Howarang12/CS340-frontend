@@ -2,6 +2,7 @@ import axios from 'axios';
 
 
 const baseUrl = 'http://flip2.engr.oregonstate.edu:34556/likes';
+// const baseUrl = 'http://localhost:34556/likes';
 
 
 export const getLikes = async () => {

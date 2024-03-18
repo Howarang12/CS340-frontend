@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as commentService from '../services/commentService'; 
+import * as userService from '../services/userService';
 import '../App.css';
 
 const Comments = () => {
@@ -7,14 +8,21 @@ const Comments = () => {
   const [commentForm, setCommentForm] = useState({ commentText: '', userID: '', postID: '' });
   const [editing, setEditing] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState(null);
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
     fetchComments();
+    fetchUsers();
   }, []);
 
   async function fetchComments() {
     const fetchedComments = await commentService.getAllComments();
     setComments(fetchedComments);
+  }
+
+  async function fetchUsers() {
+    const fetchedUsers = await userService.getAllUsers();
+    setUsers(fetchedUsers);
   }
 
   function handleInputChange(event) {
@@ -24,6 +32,7 @@ const Comments = () => {
 
   async function handleFormSubmit(event) {
     event.preventDefault();
+    console.log(commentForm)
     if (editing) {
       await commentService.editCommentByID(editingCommentId, commentForm);
       setEditing(false);
@@ -77,7 +86,15 @@ const Comments = () => {
       </div>
       <form onSubmit={handleFormSubmit}>
         <input type="text" name="commentText" placeholder="Comment Text" value={commentForm.commentText} onChange={handleInputChange} required />
-        <input type="text" name="userID" placeholder="User ID" value={commentForm.userID} onChange={handleInputChange} required />
+        {/* <input type="text" name="userID" placeholder="User ID" value={commentForm.userID} onChange={handleInputChange} required /> */}
+        <select name="userID" placeholder="User ID" value={commentForm.userID} onChange={handleInputChange}>
+          <option value="">Select User...</option>
+          {users.map((user) => (
+          <option key={user.userID} value={user.userID}>
+            {user.username}
+          </option>
+          ))}
+        </select>
         <input type="text" name="postID" placeholder="Post ID" value={commentForm.postID} onChange={handleInputChange} required />
         <button type="submit">{editing ? 'Update Comment' : 'Add Comment'}</button>
         {editing && (

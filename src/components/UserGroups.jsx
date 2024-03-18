@@ -86,14 +86,14 @@ const UserGroups = () => {
           onChange={handleInputChange}
           required
         /> */}
-        <input
+        {/* <input
           type="text"
           name="groupID"
           placeholder="Group ID"
           value={userGroupForm.groupID}
           onChange={handleInputChange}
           required
-        />
+        /> */}
         <select name="groupID" placeholder="Group ID" value={userGroupForm.groupID} onChange={handleInputChange}>
           <option value="">Select Group...</option>
           {groups.map((group) => (

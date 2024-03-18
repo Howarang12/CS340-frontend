@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const baseUrl = 'http://flip2.engr.oregonstate.edu:34556/comments';
+// const baseUrl = 'http://localhost:34556/comments';
 
 export const getAllComments = async () => {
   try {
