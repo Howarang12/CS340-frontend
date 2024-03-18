@@ -4,15 +4,30 @@ import '../App.css';
 
 const UserGroups = () => {
   const [userGroups, setUserGroups] = useState([]);
+  const [users, setUsers] = useState([])
+  const [groups, setGroups] = useState([])
   const [userGroupForm, setUserGroupForm] = useState({ userID: '', groupID: '' });
 
   useEffect(() => {
     fetchUserGroups();
+    fetchUsers();
+    fetchGroups();
   }, []);
 
   async function fetchUserGroups() {
     const fetchedUserGroups = await userGroupService.getAllUserGroups();
     setUserGroups(fetchedUserGroups);
+  }
+
+  async function fetchGroups() {
+    const fetchedGroups = await groupService.getAllGroups();
+    setGroups(fetchedGroups);
+  }
+
+
+  async function fetchUsers() {
+    const fetchedUsers = await userService.getAllUsers();
+    setUsers(fetchedUsers);
   }
 
   function handleInputChange(event) {
