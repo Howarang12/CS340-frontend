@@ -23,12 +23,12 @@ const Likes = () => {
   }
 
   async function fetchUsers() {
-    const fetchedUsers = await userservice.getAllUsers();
+    const fetchedUsers = await userService.getAllUsers();
     setUsers(fetchedUsers);
   }
 
   async function fetchGroups() {
-    const fetchedGroups = await groupservice.getAllGroups();
+    const fetchedGroups = await groupService.getAllGroups();
     setGroups(fetchedGroups);
   }
 
