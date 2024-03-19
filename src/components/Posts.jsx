@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as postService from '../services/postService'; 
+import * as userService from '../services/userService';
 import '../App.css';
 
 const Posts = () => {
@@ -7,14 +8,21 @@ const Posts = () => {
   const [postForm, setPostForm] = useState({ description: '', userID: '' });
   const [editing, setEditing] = useState(false);
   const [editingPostId, setEditingPostId] = useState(null);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     fetchPosts();
+    fetchUsers();
   }, []);
 
   async function fetchPosts() {
     const fetchedPosts = await postService.getAllPosts();
     setPosts(fetchedPosts);
+  }
+
+  async function fetchUsers() {
+    const fetchedUsers = await userService.getAllUsers();
+    setUsers(fetchedUsers);
   }
 
   function handleInputChange(event) {
@@ -77,7 +85,19 @@ const Posts = () => {
       </div>
       <form onSubmit={handleFormSubmit}>
         <input type="text" name="description" placeholder="Description" value={postForm.description} onChange={handleInputChange} required />
-        <input type="text" name="userID" placeholder="User ID" value={postForm.userID} onChange={handleInputChange} required />
+        {/* <input type="text" name="userID" placeholder="User ID" value={postForm.userID} onChange={handleInputChange} required /> */}
+        {
+          !editing &&
+          <select name="userID" placeholder="User ID" value={postForm.userID} onChange={handleInputChange}>
+            <option value="">Select User...</option>
+            {users.map((user) => (
+            <option key={user.userID} value={user.userID}>
+              {user.username}
+            </option>
+            ))}
+          </select>
+        }
+    
         <button type="submit">{editing ? 'Update Post' : 'Add Post'}</button>
         {editing && (
           <button onClick={() => {
