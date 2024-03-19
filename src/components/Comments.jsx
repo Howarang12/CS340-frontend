@@ -87,14 +87,17 @@ const Comments = () => {
       <form onSubmit={handleFormSubmit}>
         <input type="text" name="commentText" placeholder="Comment Text" value={commentForm.commentText} onChange={handleInputChange} required />
         {/* <input type="text" name="userID" placeholder="User ID" value={commentForm.userID} onChange={handleInputChange} required /> */}
-        <select name="userID" placeholder="User ID" value={commentForm.userID} onChange={handleInputChange}>
-          <option value="">Select User...</option>
-          {users.map((user) => (
-          <option key={user.userID} value={user.userID}>
-            {user.username}
-          </option>
-          ))}
-        </select>
+
+        {!editing && 
+          <select name="userID" placeholder="User ID" value={commentForm.userID} onChange={handleInputChange}>
+            <option value="">Select User...</option>
+            {users.map((user) => (
+            <option key={user.userID} value={user.userID}>
+              {user.username}
+            </option>
+            ))}
+          </select>
+        }
         <input type="text" name="postID" placeholder="Post ID" value={commentForm.postID} onChange={handleInputChange} required />
         <button type="submit">{editing ? 'Update Comment' : 'Add Comment'}</button>
         {editing && (
